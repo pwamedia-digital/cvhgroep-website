@@ -13,6 +13,7 @@ import kitchen from '../assets/images/projects/kitchen-modern.jpg'
 import spanplafond from '../assets/images/projects/spanplafond-led.jpg'
 import craftsmanship from '../assets/images/projects/craftsmanship-sunset.jpg'
 import flatRoof from '../assets/images/projects/flat-roof-oostende.jpg'
+import ownerPortrait from '../assets/images/projects/owner-portrait.jpg'
 
 export const images = {
   entrance,
@@ -22,6 +23,7 @@ export const images = {
   spanplafond,
   craftsmanship,
   flatRoof,
+  ownerPortrait,
 }
 
 export const company = {
@@ -149,7 +151,7 @@ export const story = {
   ],
   signature: 'Chris Van Hoey',
   signatureRole: 'Zaakvoerder, CVH Groep',
-  image: images.craftsmanship,
+  image: images.ownerPortrait,
 }
 
 export const gallery = [
