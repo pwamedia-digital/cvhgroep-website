@@ -124,6 +124,7 @@
   var HomepagePreview = makePreview(function (data) {
     var hero = data.hero || {};
     var intro = data.intro || {};
+    var order = list(data.sectionOrder);
     return h('div', {},
       h('section', { className: 'cvh-section cvh-hero' }, h('div', { className: 'cvh-wrap' },
         eyebrow(hero.eyebrow),
@@ -133,6 +134,17 @@
         h('span', { className: 'cvh-button' }, (hero.secondaryCta || {}).label)
       )),
       h('div', { className: 'cvh-marquee' }, list(data.marquee).map(function (item, index) { return h('span', { key: index }, item); })),
+      section([
+        eyebrow('Versleepbare paginavolgorde'),
+        h('h2', {}, 'Homepageblokken'),
+        h('p', { className: 'cvh-muted' }, 'Deze onderdelen verschijnen op de website in exact deze volgorde.'),
+        h('div', { className: 'cvh-grid cvh-grid--four' }, order.map(function (item, index) {
+          return h('div', { className: 'cvh-card', key: item.id || index },
+            h('span', { className: 'cvh-number' }, String(index + 1).padStart(2, '0')),
+            h('h3', {}, item.label)
+          );
+        }))
+      ]),
       section([
         eyebrow(intro.eyebrow),
         h('h2', {}, intro.title),
