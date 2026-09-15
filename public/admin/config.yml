@@ -44,3 +44,143 @@ collections:
                   - { label: Uitleg, name: text, widget: text }
               - { label: Toepassingen, name: suitable, widget: list, field: { label: Toepassing, name: item, widget: string } }
               - { label: Goed om te weten, name: note, widget: text }
+      - name: bedrijfsgegevens
+        label: Bedrijfs- en contactgegevens
+        file: src/content/company.json
+        format: json
+        fields:
+          - { label: Bedrijfsnaam, name: name, widget: string }
+          - { label: Officiële naam, name: legalName, widget: string }
+          - { label: Omschrijving, name: tagline, widget: string }
+          - { label: E-mailadres, name: email, widget: string }
+          - { label: Straat en nummer, name: street, widget: string }
+          - { label: Postcode en gemeente, name: city, widget: string }
+          - { label: Werkregio, name: region, widget: string }
+          - label: Sociale media
+            name: socials
+            widget: list
+            fields:
+              - { label: Platform, name: label, widget: string }
+              - { label: Link, name: href, widget: string }
+      - name: homepage
+        label: Homepage
+        file: src/content/homepage.json
+        format: json
+        fields:
+          - label: Openingsblok
+            name: hero
+            widget: object
+            fields:
+              - { label: Bovenregel, name: eyebrow, widget: string }
+              - { label: Grote titelregels, name: titleLines, widget: list, field: { label: Titelregel, name: line, widget: string } }
+              - { label: Introductie, name: intro, widget: text }
+              - label: Primaire knop
+                name: primaryCta
+                widget: object
+                fields:
+                  - { label: Tekst, name: label, widget: string }
+                  - { label: Link, name: href, widget: hidden }
+              - label: Secundaire knop
+                name: secondaryCta
+                widget: object
+                fields:
+                  - { label: Tekst, name: label, widget: string }
+                  - { label: Link, name: href, widget: hidden }
+          - { label: Doorlopende specialisaties, name: marquee, widget: list, field: { label: Tekst, name: item, widget: string } }
+          - label: Wie zijn we
+            name: intro
+            widget: object
+            fields:
+              - { label: Bovenregel, name: eyebrow, widget: string }
+              - { label: Titel, name: title, widget: string }
+              - { label: Alinea's, name: paragraphs, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
+              - label: Sterke punten
+                name: pillars
+                widget: list
+                fields:
+                  - { label: Titel, name: title, widget: string }
+                  - { label: Uitleg, name: text, widget: text }
+      - name: uitgelicht_project
+        label: Project in de kijker
+        file: src/content/project.json
+        format: json
+        fields:
+          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Projecttitel, name: title, widget: string }
+          - { label: Klant, name: client, widget: string }
+          - { label: Jaar, name: year, widget: string }
+          - { label: Status, name: status, widget: string }
+          - { label: Locatie, name: location, widget: string }
+          - { label: Projectfoto, name: image, widget: image, required: false }
+          - { label: Beschrijving, name: description, widget: text }
+          - { label: Uitgevoerde werken, name: scope, widget: list, field: { label: Onderdeel, name: item, widget: string } }
+      - name: over_ons
+        label: Over ons
+        file: src/content/story.json
+        format: json
+        fields:
+          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Titel, name: title, widget: string }
+          - { label: Inleiding, name: lead, widget: text }
+          - { label: Alinea's, name: paragraphs, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
+          - { label: Naam zaakvoerder, name: signature, widget: string }
+          - { label: Functie, name: signatureRole, widget: string }
+          - { label: Portretfoto, name: image, widget: image, required: false }
+      - name: galerij
+        label: Fotogalerij
+        file: src/content/gallery.json
+        format: json
+        fields:
+          - label: Foto's
+            name: items
+            widget: list
+            summary: '{{fields.caption}}'
+            fields:
+              - { label: Foto, name: image, widget: image, required: false }
+              - { label: Bestaande reservefoto, name: fallback, widget: hidden }
+              - { label: Bijschrift, name: caption, widget: string }
+              - { label: Formaat, name: span, widget: select, options: [{ label: Normaal, value: normal }, { label: Breed, value: wide }, { label: Hoog, value: tall }] }
+      - name: werkwijze
+        label: Werkwijze
+        file: src/content/process.json
+        format: json
+        fields:
+          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Titel, name: title, widget: string }
+          - { label: Inleiding, name: intro, widget: text }
+          - label: Stappen
+            name: steps
+            widget: list
+            summary: '{{fields.number}} — {{fields.title}}'
+            fields:
+              - { label: Nummer, name: number, widget: string }
+              - { label: Titel, name: title, widget: string }
+              - { label: Uitleg, name: text, widget: text }
+      - name: reviews
+        label: Klantenreviews
+        file: src/content/testimonials.json
+        format: json
+        fields:
+          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Titel, name: title, widget: string }
+          - label: Reviews
+            name: items
+            widget: list
+            summary: '{{fields.author}} — {{fields.detail}}'
+            fields:
+              - { label: Review, name: quote, widget: text }
+              - { label: Naam, name: author, widget: string }
+              - { label: Type project, name: detail, widget: string }
+      - name: contactblok
+        label: Contactblok
+        file: src/content/contact.json
+        format: json
+        fields:
+          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Titel, name: title, widget: string }
+          - { label: Tekst, name: text, widget: text }
+          - label: Formulierkeuzes
+            name: fields
+            widget: object
+            fields:
+              - { label: Types projecten, name: services, widget: list, field: { label: Keuze, name: item, widget: string } }
