@@ -1,0 +1,46 @@
+backend:
+  name: github
+  repo: pwaseys/cvhgroep-website
+  branch: main
+  auth_methods: [token]
+
+locale: nl
+site_url: https://pwaseys.github.io/cvhgroep-website/
+display_url: https://pwaseys.github.io/cvhgroep-website/
+logo_url: /cvhgroep-website/favicon.png
+media_folder: public/uploads
+public_folder: /cvhgroep-website/uploads
+
+collections:
+  - name: website
+    label: Website
+    files:
+      - name: diensten
+        label: Diensten en detailpagina's
+        file: src/content/services.json
+        format: json
+        fields:
+          - label: Diensten
+            name: services
+            widget: list
+            minimize_collapsed: true
+            summary: '{{fields.number}} — {{fields.title}}'
+            fields:
+              - { label: Technische ID, name: id, widget: hidden }
+              - { label: Nummer, name: number, widget: string }
+              - { label: Titel, name: title, widget: string }
+              - { label: Bovenregel, name: subtitle, widget: string }
+              - { label: Hoofdfoto, name: image, widget: image, required: false }
+              - { label: Korte tekst op de tegel, name: description, widget: text }
+              - { label: Kenmerken, name: tags, widget: list, field: { label: Kenmerk, name: tag, widget: string } }
+              - { label: Intro detailpagina, name: lead, widget: text }
+              - { label: Uitleg werkwijze, name: intro, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
+              - label: Technieken en uitvoering
+                name: techniques
+                widget: list
+                summary: '{{fields.title}}'
+                fields:
+                  - { label: Titel, name: title, widget: string }
+                  - { label: Uitleg, name: text, widget: text }
+              - { label: Toepassingen, name: suitable, widget: list, field: { label: Toepassing, name: item, widget: string } }
+              - { label: Goed om te weten, name: note, widget: text }

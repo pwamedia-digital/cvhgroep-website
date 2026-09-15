@@ -3,12 +3,11 @@ import Header from '../layout/Header'
 import Footer from '../layout/Footer'
 import Button from '../ui/Button'
 import Container from '../ui/Container'
-import { services } from '../../data/site'
-import { serviceDetails } from '../../data/serviceDetails'
+import { cmsServices as services } from '../../data/cmsServices'
 
 export default function ServicePage({ serviceId }) {
   const service = services.find((item) => item.id === serviceId)
-  const details = serviceDetails[serviceId]
+  const details = service
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -35,7 +34,7 @@ export default function ServicePage({ serviceId }) {
     </div></Container></section>
     <section className="bg-sand-100 py-20 sm:py-28"><Container>
       <p className="font-sans text-xs font-700 uppercase tracking-[0.22em] text-brand-600">Technieken & uitvoering</p><h2 className="mt-4 max-w-3xl font-display text-4xl font-800 leading-tight text-ink sm:text-5xl">Wat er achter een sterk eindresultaat zit.</h2>
-      <div className="mt-12 grid gap-px overflow-hidden rounded-3xl bg-brand-900/10 md:grid-cols-2">{details.techniques.map(([title, text], i) => <article key={title} className="bg-white p-8 sm:p-10"><span className="font-display text-4xl font-800 italic text-brand-200">0{i + 1}</span><h3 className="mt-5 font-display text-2xl font-800 text-ink sm:text-3xl">{title}</h3><p className="mt-3 font-sans text-base leading-relaxed text-ink-soft">{text}</p></article>)}</div>
+      <div className="mt-12 grid gap-px overflow-hidden rounded-3xl bg-brand-900/10 md:grid-cols-2">{details.techniques.map(({ title, text }, i) => <article key={title} className="bg-white p-8 sm:p-10"><span className="font-display text-4xl font-800 italic text-brand-200">0{i + 1}</span><h3 className="mt-5 font-display text-2xl font-800 text-ink sm:text-3xl">{title}</h3><p className="mt-3 font-sans text-base leading-relaxed text-ink-soft">{text}</p></article>)}</div>
     </Container></section>
     <section className="bg-white py-20 sm:py-28"><Container><div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
       <div><p className="font-sans text-xs font-700 uppercase tracking-[0.22em] text-brand-600">Toepassingen</p><h2 className="mt-4 font-display text-4xl font-800 text-ink sm:text-5xl">Waarvoor kunt u bij ons terecht?</h2><ul className="mt-8 divide-y divide-brand-900/10 border-y border-brand-900/10">{details.suitable.map((item) => <li key={item} className="flex gap-4 py-4 font-sans text-lg text-ink-soft"><span className="text-brand-500">✓</span>{item}</li>)}</ul></div>
