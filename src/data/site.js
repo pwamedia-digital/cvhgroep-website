@@ -18,7 +18,6 @@ import { cmsServices } from './cmsServices'
 
 export const images = { entrance, bathroom, renovation, kitchen, spanplafond, craftsmanship, flatRoof, ownerPortrait }
 export const company = companyContent
-export const nav = [{label:'Specialisaties',href:'#specialisaties'},{label:'Projecten',href:'#projecten'},{label:'Over ons',href:'#over-ons'},{label:'Werkwijze',href:'#werkwijze'},{label:'Contact',href:'#contact'}]
 export const hero = homepageContent.hero
 export const marquee = homepageContent.marquee
 export const intro = homepageContent.intro
@@ -32,6 +31,14 @@ export const homepageOrder = homepageContent.sectionOrder || [
   { id: 'testimonials' },
   { id: 'contact' },
 ]
+const visibleHomepageSections = new Set(homepageOrder.filter(({ enabled }) => enabled !== false).map(({ id }) => id))
+export const nav = [
+  { id: 'services', label: 'Specialisaties', href: '#specialisaties' },
+  { id: 'project', label: 'Projecten', href: '#projecten' },
+  { id: 'story', label: 'Over ons', href: '#over-ons' },
+  { id: 'process', label: 'Werkwijze', href: '#werkwijze' },
+  { id: 'contact', label: 'Contact', href: '#contact' },
+].filter(({ id }) => visibleHomepageSections.has(id))
 export const services = cmsServices
 export const signatureProject = { ...projectContent, image: projectContent.image || bathroom }
 export const story = { ...storyContent, image: storyContent.image || ownerPortrait }
