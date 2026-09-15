@@ -3,6 +3,9 @@ backend:
   repo: pwaseys/cvhgroep-website
   branch: main
   auth_methods: [token]
+  squash_merges: true
+
+publish_mode: editorial_workflow
 
 locale: nl
 site_url: https://pwaseys.github.io/cvhgroep-website/
@@ -67,6 +70,18 @@ collections:
         file: src/content/homepage.json
         format: json
         fields:
+          - label: Volgorde van de homepageblokken
+            name: sectionOrder
+            widget: list
+            hint: Neem een blok vast aan het sleepicoon en verplaats het. Het openingsblok blijft altijd bovenaan.
+            summary: '{{fields.label}}'
+            allow_add: false
+            min: 8
+            max: 8
+            collapsed: true
+            fields:
+              - { label: Onderdeel, name: label, widget: hidden }
+              - { label: Technische ID, name: id, widget: hidden }
           - label: Openingsblok
             name: hero
             widget: object
