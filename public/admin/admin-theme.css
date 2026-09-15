@@ -1,0 +1,74 @@
+:root {
+  --sui-base-hue: 216 !important;
+  --sui-primary-accent-color: #4f7fbf !important;
+  --sui-primary-accent-color-dark: #416fae !important;
+  --sui-primary-accent-color-light: #6794ca !important;
+  --sui-primary-accent-color-text: #4f7fbf !important;
+  --sui-focus-ring-color: rgb(79 127 191 / 42%) !important;
+  --sui-font-family-default: Inter, "Source Sans 3", system-ui, sans-serif !important;
+  --sui-heading-font-family: Inter, "Source Sans 3", system-ui, sans-serif !important;
+  --sui-control-font-family: Inter, "Source Sans 3", system-ui, sans-serif !important;
+  --sui-textbox-font-family: Inter, "Source Sans 3", system-ui, sans-serif !important;
+  --sui-textbox-border-radius: 10px !important;
+  --sui-button-medium-border-radius: 9px !important;
+  --sui-button-large-border-radius: 10px !important;
+  --sui-control-medium-border-radius: 9px !important;
+  --sui-tree-item-border-radius: 9px !important;
+  --sui-listbox-border-radius: 12px !important;
+  --sui-option-border-radius: 8px !important;
+  --sui-line-height-comfortable: 1.7 !important;
+}
+
+body {
+  letter-spacing: .005em;
+}
+
+button, input, textarea, select {
+  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease, transform .18s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+textarea {
+  min-height: 130px !important;
+}
+
+#cvh-editor-controls {
+  position: fixed;
+  z-index: 10000;
+  top: 11px;
+  right: 176px;
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid rgb(115 139 171 / 22%);
+  border-radius: 12px;
+  background: rgb(13 30 55 / 82%);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+  backdrop-filter: blur(14px);
+}
+
+.cvh-editor-control {
+  width: 34px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #dce8f7;
+  font: 600 21px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.cvh-editor-control:hover,
+.cvh-editor-control:focus-visible {
+  background: rgb(100 148 203 / 24%);
+  color: #fff;
+  outline: none;
+}
+
+@media (max-width: 760px) {
+  #cvh-editor-controls { right: 116px; }
+}

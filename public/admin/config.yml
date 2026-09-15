@@ -6,108 +6,108 @@ backend:
   squash_merges: true
 
 publish_mode: editorial_workflow
-
 locale: nl
+app_title: CVH Groep — Websitebeheer
 site_url: https://pwaseys.github.io/cvhgroep-website/
 display_url: https://pwaseys.github.io/cvhgroep-website/
-logo_url: /cvhgroep-website/favicon.png
+logo:
+  src: /cvhgroep-website/favicon.png
+  show_in_header: true
 media_folder: public/uploads
 public_folder: /cvhgroep-website/uploads
 
 collections:
   - name: website
-    label: Website
+    label: Websiteblokken
+    description: Bewerk de website van boven naar beneden. Ieder onderdeel wordt afzonderlijk opgeslagen en pas gepubliceerd wanneer jij dat bevestigt.
     files:
-      - name: homepage
-        label: '01 — Homepage: opening, intro en volgorde'
-        description: Beheer het openingsblok, de korte introductie en de volgorde en zichtbaarheid van alle homepageonderdelen.
-        file: src/content/homepage.json
+      - name: opening
+        label: 01 — Opening van de website
+        description: 'De grote eerste indruk: bovenregel, hoofdtitel, introductie, knoppen en de doorlopende lijst met specialisaties.'
+        file: src/content/opening.json
         format: json
         fields:
-          - label: Volgorde en zichtbaarheid van de homepageblokken
-            name: sectionOrder
-            widget: list
-            hint: De lijst loopt van boven naar beneden zoals de website. Neem een blok vast aan het sleepicoon om het te verplaatsen. Zet de schakelaar uit om het blok te verbergen.
-            summary: '{{fields.label}} — zichtbaar: {{fields.enabled}}'
-            allow_add: false
-            min: 8
-            max: 8
-            collapsed: true
-            fields:
-              - { label: Naam van het blok, name: label, widget: hidden }
-              - { label: Technische ID, name: id, widget: hidden }
-              - { label: Zichtbaar op de website, name: enabled, widget: boolean, default: true }
-          - label: Openingsblok bovenaan
+          - label: Groot openingsblok
             name: hero
             widget: object
-            hint: Dit is het eerste grote blok dat bezoekers zien. Het blijft altijd bovenaan staan.
+            collapsed: false
             fields:
-              - { label: Bovenregel, name: eyebrow, widget: string }
-              - { label: Grote titelregels, name: titleLines, widget: list, field: { label: Titelregel, name: line, widget: string } }
-              - { label: Introductie, name: intro, widget: text }
-              - label: Primaire knop
+              - { label: Kleine bovenregel, name: eyebrow, widget: string, hint: Verschijnt boven de grote titel. }
+              - { label: Grote titel, name: titleLines, widget: list, field: { label: Titelregel, name: line, widget: string }, hint: Iedere regel verschijnt afzonderlijk onder elkaar. }
+              - { label: Introductietekst, name: intro, widget: text }
+              - label: Eerste knop
                 name: primaryCta
                 widget: object
                 fields:
-                  - { label: Tekst, name: label, widget: string }
+                  - { label: Tekst op de knop, name: label, widget: string }
                   - { label: Link, name: href, widget: hidden }
-              - label: Secundaire knop
+              - label: Tweede knop
                 name: secondaryCta
                 widget: object
                 fields:
-                  - { label: Tekst, name: label, widget: string }
+                  - { label: Tekst op de knop, name: label, widget: string }
                   - { label: Link, name: href, widget: hidden }
-          - { label: Doorlopende specialisaties onder het openingsblok, name: marquee, widget: list, field: { label: Tekst, name: item, widget: string } }
-          - label: Introblok ‘Wie zijn we’
-            name: intro
-            widget: object
+          - { label: Doorlopende regel onder het openingsblok, name: marquee, widget: list, field: { label: Specialisatie, name: item, widget: string } }
+
+      - name: wie_zijn_we
+        label: 02 — Wie zijn we
+        description: De introductie van CVH Groep met de vier belangrijkste sterke punten.
+        file: src/content/intro.json
+        format: json
+        fields:
+          - { label: Kleine bovenregel, name: eyebrow, widget: string }
+          - { label: Titel, name: title, widget: string }
+          - { label: Tekstblokken, name: paragraphs, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
+          - label: Vier sterke punten
+            name: pillars
+            widget: list
+            summary: '{{fields.title}}'
+            min: 4
+            max: 4
             fields:
-              - { label: Bovenregel, name: eyebrow, widget: string }
               - { label: Titel, name: title, widget: string }
-              - { label: Alinea's, name: paragraphs, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
-              - label: Sterke punten
-                name: pillars
-                widget: list
-                fields:
-                  - { label: Titel, name: title, widget: string }
-                  - { label: Uitleg, name: text, widget: text }
+              - { label: Korte uitleg, name: text, widget: text }
+
       - name: diensten
-        label: 02 — Specialisaties en detailpagina's
-        description: Beheer de vier tegels en de uitgebreide pagina met technieken, toepassingen en uitleg per specialisatie.
+        label: 03 — Specialisaties
+        description: De vier aanklikbare tegels en hun afzonderlijke detailpagina’s met technieken en toepassingen.
         file: src/content/services.json
         format: json
         fields:
-          - label: Diensten
+          - label: Specialisaties
             name: services
             widget: list
             minimize_collapsed: true
             summary: '{{fields.number}} — {{fields.title}}'
+            min: 4
+            max: 4
             fields:
               - { label: Technische ID, name: id, widget: hidden }
               - { label: Nummer, name: number, widget: string }
               - { label: Titel, name: title, widget: string }
-              - { label: Bovenregel, name: subtitle, widget: string }
+              - { label: Kleine bovenregel, name: subtitle, widget: string }
               - { label: Hoofdfoto, name: image, widget: image, required: false }
               - { label: Korte tekst op de tegel, name: description, widget: text }
-              - { label: Kenmerken, name: tags, widget: list, field: { label: Kenmerk, name: tag, widget: string } }
-              - { label: Intro detailpagina, name: lead, widget: text }
-              - { label: Uitleg werkwijze, name: intro, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
-              - label: Technieken en uitvoering
+              - { label: Kenmerken op de tegel, name: tags, widget: list, field: { label: Kenmerk, name: tag, widget: string } }
+              - { label: Inleidende tekst detailpagina, name: lead, widget: text }
+              - { label: Uitleg over de werkwijze, name: intro, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
+              - label: Gebruikte technieken en uitvoering
                 name: techniques
                 widget: list
                 summary: '{{fields.title}}'
                 fields:
-                  - { label: Titel, name: title, widget: string }
+                  - { label: Techniek, name: title, widget: string }
                   - { label: Uitleg, name: text, widget: text }
-              - { label: Toepassingen, name: suitable, widget: list, field: { label: Toepassing, name: item, widget: string } }
+              - { label: Geschikt voor, name: suitable, widget: list, field: { label: Toepassing, name: item, widget: string } }
               - { label: Goed om te weten, name: note, widget: text }
+
       - name: uitgelicht_project
-        label: 03 — Project in de kijker
-        description: Het grote uitgelichte project dat onder de specialisaties verschijnt.
+        label: 04 — Project in de kijker
+        description: Het grote projectblok met foto, projectgegevens, beschrijving en uitgevoerde werken.
         file: src/content/project.json
         format: json
         fields:
-          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Kleine bovenregel, name: eyebrow, widget: string }
           - { label: Projecttitel, name: title, widget: string }
           - { label: Klant, name: client, widget: string }
           - { label: Jaar, name: year, widget: string }
@@ -116,26 +116,28 @@ collections:
           - { label: Projectfoto, name: image, widget: image, required: false }
           - { label: Beschrijving, name: description, widget: text }
           - { label: Uitgevoerde werken, name: scope, widget: list, field: { label: Onderdeel, name: item, widget: string } }
+
       - name: over_ons
-        label: 04 — Over ons
-        description: Het persoonlijke verhaal van CVH Groep en de voorstelling van de zaakvoerder.
+        label: 05 — Over ons
+        description: Het persoonlijke verhaal van CVH Groep en de voorstelling van zaakvoerder Chris.
         file: src/content/story.json
         format: json
         fields:
-          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Kleine bovenregel, name: eyebrow, widget: string }
           - { label: Titel, name: title, widget: string }
-          - { label: Inleiding, name: lead, widget: text }
-          - { label: Alinea's, name: paragraphs, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
+          - { label: Inleidende tekst, name: lead, widget: text }
+          - { label: Tekstblokken, name: paragraphs, widget: list, field: { label: Alinea, name: paragraph, widget: text } }
           - { label: Naam zaakvoerder, name: signature, widget: string }
           - { label: Functie, name: signatureRole, widget: string }
           - { label: Portretfoto, name: image, widget: image, required: false }
+
       - name: galerij
-        label: 05 — Fotogalerij
-        description: De realisatiefoto's en hun formaat in het fotoblok.
+        label: 06 — Fotogalerij
+        description: De realisatiefoto’s, hun bijschrift en het formaat waarmee ze in de galerij verschijnen.
         file: src/content/gallery.json
         format: json
         fields:
-          - label: Foto's
+          - label: Foto’s
             name: items
             widget: list
             summary: '{{fields.caption}}'
@@ -143,31 +145,35 @@ collections:
               - { label: Foto, name: image, widget: image, required: false }
               - { label: Bestaande reservefoto, name: fallback, widget: hidden }
               - { label: Bijschrift, name: caption, widget: string }
-              - { label: Formaat, name: span, widget: select, options: [{ label: Normaal, value: normal }, { label: Breed, value: wide }, { label: Hoog, value: tall }] }
+              - { label: Formaat op de website, name: span, widget: select, options: [{ label: Normaal, value: normal }, { label: Breed, value: wide }, { label: Hoog, value: tall }] }
+
       - name: werkwijze
-        label: 06 — Werkwijze
-        description: De stappen van kennismaking tot oplevering.
+        label: 07 — Werkwijze
+        description: De vier stappen waarmee je uitlegt hoe een project van kennismaking tot oplevering verloopt.
         file: src/content/process.json
         format: json
         fields:
-          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Kleine bovenregel, name: eyebrow, widget: string }
           - { label: Titel, name: title, widget: string }
-          - { label: Inleiding, name: intro, widget: text }
-          - label: Stappen
+          - { label: Inleidende tekst, name: intro, widget: text }
+          - label: Vier stappen
             name: steps
             widget: list
             summary: '{{fields.number}} — {{fields.title}}'
+            min: 4
+            max: 4
             fields:
               - { label: Nummer, name: number, widget: string }
               - { label: Titel, name: title, widget: string }
               - { label: Uitleg, name: text, widget: text }
+
       - name: reviews
-        label: 07 — Klantenreviews
-        description: Ervaringen van klanten die onder de werkwijze verschijnen.
+        label: 08 — Klantenreviews
+        description: De ervaringen van klanten die onder de werkwijze op de homepage verschijnen.
         file: src/content/testimonials.json
         format: json
         fields:
-          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Kleine bovenregel, name: eyebrow, widget: string }
           - { label: Titel, name: title, widget: string }
           - label: Reviews
             name: items
@@ -175,31 +181,33 @@ collections:
             summary: '{{fields.author}} — {{fields.detail}}'
             fields:
               - { label: Review, name: quote, widget: text }
-              - { label: Naam, name: author, widget: string }
+              - { label: Naam van de klant, name: author, widget: string }
               - { label: Type project, name: detail, widget: string }
+
       - name: contactblok
-        label: 08 — Contactblok
-        description: De afsluitende oproep en de projectkeuzes in het contactformulier.
+        label: 09 — Contactblok
+        description: De afsluitende oproep en de keuzes die bezoekers in het contactformulier kunnen aanduiden.
         file: src/content/contact.json
         format: json
         fields:
-          - { label: Bovenregel, name: eyebrow, widget: string }
+          - { label: Kleine bovenregel, name: eyebrow, widget: string }
           - { label: Titel, name: title, widget: string }
           - { label: Tekst, name: text, widget: text }
-          - label: Formulierkeuzes
+          - label: Keuzes in het formulier
             name: fields
             widget: object
             fields:
               - { label: Types projecten, name: services, widget: list, field: { label: Keuze, name: item, widget: string } }
+
       - name: bedrijfsgegevens
-        label: 09 — Algemene bedrijfsgegevens
-        description: Gegevens die op meerdere plaatsen terugkomen, zoals naam, adres, e-mail en sociale media.
+        label: 10 — Bedrijfsgegevens en sociale media
+        description: Algemene gegevens die op verschillende plaatsen in de website worden gebruikt.
         file: src/content/company.json
         format: json
         fields:
           - { label: Bedrijfsnaam, name: name, widget: string }
           - { label: Officiële naam, name: legalName, widget: string }
-          - { label: Omschrijving, name: tagline, widget: string }
+          - { label: Korte omschrijving, name: tagline, widget: string }
           - { label: E-mailadres, name: email, widget: string }
           - { label: Straat en nummer, name: street, widget: string }
           - { label: Postcode en gemeente, name: city, widget: string }
@@ -207,6 +215,7 @@ collections:
           - label: Sociale media
             name: socials
             widget: list
+            summary: '{{fields.label}}'
             fields:
               - { label: Platform, name: label, widget: string }
               - { label: Link, name: href, widget: string }

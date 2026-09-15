@@ -7,7 +7,8 @@ import craftsmanship from '../assets/images/projects/craftsmanship-sunset.jpg'
 import flatRoof from '../assets/images/projects/flat-roof-oostende.jpg'
 import ownerPortrait from '../assets/images/projects/owner-portrait.jpg'
 import companyContent from '../content/company.json'
-import homepageContent from '../content/homepage.json'
+import openingContent from '../content/opening.json'
+import introContent from '../content/intro.json'
 import projectContent from '../content/project.json'
 import storyContent from '../content/story.json'
 import galleryContent from '../content/gallery.json'
@@ -18,27 +19,10 @@ import { cmsServices } from './cmsServices'
 
 export const images = { entrance, bathroom, renovation, kitchen, spanplafond, craftsmanship, flatRoof, ownerPortrait }
 export const company = companyContent
-export const hero = homepageContent.hero
-export const marquee = homepageContent.marquee
-export const intro = homepageContent.intro
-export const homepageOrder = homepageContent.sectionOrder || [
-  { id: 'intro' },
-  { id: 'services' },
-  { id: 'project' },
-  { id: 'story' },
-  { id: 'gallery' },
-  { id: 'process' },
-  { id: 'testimonials' },
-  { id: 'contact' },
-]
-const visibleHomepageSections = new Set(homepageOrder.filter(({ enabled }) => enabled !== false).map(({ id }) => id))
-export const nav = [
-  { id: 'services', label: 'Specialisaties', href: '#specialisaties' },
-  { id: 'project', label: 'Projecten', href: '#projecten' },
-  { id: 'story', label: 'Over ons', href: '#over-ons' },
-  { id: 'process', label: 'Werkwijze', href: '#werkwijze' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
-].filter(({ id }) => visibleHomepageSections.has(id))
+export const nav = [{label:'Specialisaties',href:'#specialisaties'},{label:'Projecten',href:'#projecten'},{label:'Over ons',href:'#over-ons'},{label:'Werkwijze',href:'#werkwijze'},{label:'Contact',href:'#contact'}]
+export const hero = openingContent.hero
+export const marquee = openingContent.marquee
+export const intro = introContent
 export const services = cmsServices
 export const signatureProject = { ...projectContent, image: projectContent.image || bathroom }
 export const story = { ...storyContent, image: storyContent.image || ownerPortrait }

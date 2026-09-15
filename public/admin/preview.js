@@ -121,10 +121,8 @@
     );
   }, 'Live preview — diensten en detailpagina’s');
 
-  var HomepagePreview = makePreview(function (data) {
+  var OpeningPreview = makePreview(function (data) {
     var hero = data.hero || {};
-    var intro = data.intro || {};
-    var order = list(data.sectionOrder);
     return h('div', {},
       h('section', { className: 'cvh-section cvh-hero' }, h('div', { className: 'cvh-wrap' },
         eyebrow(hero.eyebrow),
@@ -133,31 +131,22 @@
         h('span', { className: 'cvh-button cvh-button--solid' }, (hero.primaryCta || {}).label),
         h('span', { className: 'cvh-button' }, (hero.secondaryCta || {}).label)
       )),
-      h('div', { className: 'cvh-marquee' }, list(data.marquee).map(function (item, index) { return h('span', { key: index }, item); })),
-      section([
-        eyebrow('Versleepbare paginavolgorde'),
-        h('h2', {}, 'Homepageblokken'),
-        h('p', { className: 'cvh-muted' }, 'Deze onderdelen verschijnen op de website in exact deze volgorde.'),
-        h('div', { className: 'cvh-grid cvh-grid--four' }, order.map(function (item, index) {
-          return h('div', { className: 'cvh-card', key: item.id || index },
-            h('span', { className: 'cvh-number' }, String(index + 1).padStart(2, '0')),
-            h('h3', {}, item.label),
-            h('div', { className: item.enabled === false ? 'cvh-status cvh-status--off' : 'cvh-status' }, item.enabled === false ? 'Verborgen' : 'Zichtbaar')
-          );
-        }))
-      ]),
-      order.some(function (item) { return item.id === 'intro' && item.enabled !== false; }) ? section([
-        eyebrow(intro.eyebrow),
-        h('h2', {}, intro.title),
-        h('div', { className: 'cvh-split' },
-          h('div', {}, list(intro.paragraphs).map(function (paragraph, index) { return h('p', { key: index }, paragraph); })),
-          h('div', { className: 'cvh-grid' }, list(intro.pillars).map(function (pillar, index) {
-            return h('div', { className: 'cvh-card', key: index }, h('h3', {}, pillar.title), h('p', {}, pillar.text));
-          }))
-        )
-      ], 'cvh-section--white') : null
+      h('div', { className: 'cvh-marquee' }, list(data.marquee).map(function (item, index) { return h('span', { key: index }, item); }))
     );
-  }, 'Live preview — homepage');
+  }, 'Live preview — opening van de website');
+
+  var IntroPreview = makePreview(function (data) {
+    return section([
+      eyebrow(data.eyebrow),
+      h('h2', {}, data.title),
+      h('div', { className: 'cvh-split' },
+        h('div', {}, list(data.paragraphs).map(function (paragraph, index) { return h('p', { key: index }, paragraph); })),
+        h('div', { className: 'cvh-grid' }, list(data.pillars).map(function (pillar, index) {
+          return h('div', { className: 'cvh-card', key: index }, h('h3', {}, pillar.title), h('p', {}, pillar.text));
+        }))
+      )
+    ], 'cvh-section--white');
+  }, 'Live preview — wie zijn we');
 
   var CompanyPreview = makePreview(function (data) {
     return section([
@@ -238,7 +227,8 @@
 
   CMS.registerPreviewTemplate('diensten', ServicesPreview);
   CMS.registerPreviewTemplate('bedrijfsgegevens', CompanyPreview);
-  CMS.registerPreviewTemplate('homepage', HomepagePreview);
+  CMS.registerPreviewTemplate('opening', OpeningPreview);
+  CMS.registerPreviewTemplate('wie_zijn_we', IntroPreview);
   CMS.registerPreviewTemplate('uitgelicht_project', ProjectPreview);
   CMS.registerPreviewTemplate('over_ons', StoryPreview);
   CMS.registerPreviewTemplate('galerij', GalleryPreview);
