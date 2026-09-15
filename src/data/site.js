@@ -22,6 +22,16 @@ export const nav = [{label:'Specialisaties',href:'#specialisaties'},{label:'Proj
 export const hero = homepageContent.hero
 export const marquee = homepageContent.marquee
 export const intro = homepageContent.intro
+export const homepageOrder = homepageContent.sectionOrder || [
+  { id: 'intro' },
+  { id: 'services' },
+  { id: 'project' },
+  { id: 'story' },
+  { id: 'gallery' },
+  { id: 'process' },
+  { id: 'testimonials' },
+  { id: 'contact' },
+]
 export const services = cmsServices
 export const signatureProject = { ...projectContent, image: projectContent.image || bathroom }
 export const story = { ...storyContent, image: storyContent.image || ownerPortrait }
