@@ -141,11 +141,12 @@
         h('div', { className: 'cvh-grid cvh-grid--four' }, order.map(function (item, index) {
           return h('div', { className: 'cvh-card', key: item.id || index },
             h('span', { className: 'cvh-number' }, String(index + 1).padStart(2, '0')),
-            h('h3', {}, item.label)
+            h('h3', {}, item.label),
+            h('div', { className: item.enabled === false ? 'cvh-status cvh-status--off' : 'cvh-status' }, item.enabled === false ? 'Verborgen' : 'Zichtbaar')
           );
         }))
       ]),
-      section([
+      order.some(function (item) { return item.id === 'intro' && item.enabled !== false; }) ? section([
         eyebrow(intro.eyebrow),
         h('h2', {}, intro.title),
         h('div', { className: 'cvh-split' },
@@ -154,7 +155,7 @@
             return h('div', { className: 'cvh-card', key: index }, h('h3', {}, pillar.title), h('p', {}, pillar.text));
           }))
         )
-      ], 'cvh-section--white')
+      ], 'cvh-section--white') : null
     );
   }, 'Live preview — homepage');
 
