@@ -12,6 +12,18 @@ import Process from './components/sections/Process'
 import Testimonials from './components/sections/Testimonials'
 import Contact from './components/sections/Contact'
 import ServicePage from './components/pages/ServicePage'
+import { homepageOrder } from './data/site'
+
+const homepageSections = {
+  intro: Intro,
+  services: Services,
+  project: SignatureProject,
+  story: Story,
+  gallery: Gallery,
+  process: Process,
+  testimonials: Testimonials,
+  contact: Contact,
+}
 
 export default function App() {
   const [hash, setHash] = useState(window.location.hash)
@@ -23,5 +35,5 @@ export default function App() {
     }
   }, [hash, serviceMatch])
   if (serviceMatch) return <ServicePage serviceId={serviceMatch[1]} />
-  return <><a href="#specialisaties" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand-600 focus:px-5 focus:py-2.5 focus:font-sans focus:text-sm focus:font-600 focus:text-white">Naar hoofdinhoud</a><Header /><main><Hero /><Marquee /><Intro /><Services /><SignatureProject /><Story /><Gallery /><Process /><Testimonials /><Contact /></main><Footer /></>
+  return <><a href="#specialisaties" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand-600 focus:px-5 focus:py-2.5 focus:font-sans focus:text-sm focus:font-600 focus:text-white">Naar hoofdinhoud</a><Header /><main><Hero /><Marquee />{homepageOrder.map(({ id }) => { const Section = homepageSections[id]; return Section ? <Section key={id} /> : null })}</main><Footer /></>
 }
