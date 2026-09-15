@@ -67,6 +67,10 @@ img { display: block; max-width: 100%; }
 .cvh-contact-box { padding: 1.5rem; border: 1px solid rgba(255,255,255,.25); }
 .cvh-field { margin-top: .8rem; padding: .75rem 0; border-bottom: 1px solid rgba(255,255,255,.25); color: #cfd8e6; }
 .cvh-preview-label { position: sticky; top: 0; z-index: 5; padding: .55rem 1rem; background: #08162c; color: #9fb7d7; font-size: .68rem; letter-spacing: .13em; text-align: center; text-transform: uppercase; }
+.cvh-status { display: inline-flex; align-items: center; gap: .45rem; margin-top: .75rem; color: #28704a; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.cvh-status::before { content: ''; width: .55rem; height: .55rem; border-radius: 50%; background: #35a66f; }
+.cvh-status--off { color: #8a5260; }
+.cvh-status--off::before { background: #b76878; }
 
 @media (max-width: 700px) {
   .cvh-grid, .cvh-grid--four, .cvh-split { grid-template-columns: 1fr; }
