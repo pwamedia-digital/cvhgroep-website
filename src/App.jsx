@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
@@ -10,33 +11,17 @@ import Gallery from './components/sections/Gallery'
 import Process from './components/sections/Process'
 import Testimonials from './components/sections/Testimonials'
 import Contact from './components/sections/Contact'
+import ServicePage from './components/pages/ServicePage'
 
 export default function App() {
-  return (
-    <>
-      <a
-        href="#specialisaties"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand-600 focus:px-5 focus:py-2.5 focus:font-sans focus:text-sm focus:font-600 focus:text-white"
-      >
-        Naar hoofdinhoud
-      </a>
-
-      <Header />
-
-      <main>
-        <Hero />
-        <Marquee />
-        <Intro />
-        <Services />
-        <SignatureProject />
-        <Story />
-        <Gallery />
-        <Process />
-        <Testimonials />
-        <Contact />
-      </main>
-
-      <Footer />
-    </>
-  )
+  const [hash, setHash] = useState(window.location.hash)
+  useEffect(() => { const update = () => setHash(window.location.hash); window.addEventListener('hashchange', update); return () => window.removeEventListener('hashchange', update) }, [])
+  const serviceMatch = hash.match(/^#\/diensten\/([^/?]+)/)
+  useEffect(() => {
+    if (!serviceMatch && hash.startsWith('#') && hash.length > 1) {
+      requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView())
+    }
+  }, [hash, serviceMatch])
+  if (serviceMatch) return <ServicePage serviceId={serviceMatch[1]} />
+  return <><a href="#specialisaties" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand-600 focus:px-5 focus:py-2.5 focus:font-sans focus:text-sm focus:font-600 focus:text-white">Naar hoofdinhoud</a><Header /><main><Hero /><Marquee /><Intro /><Services /><SignatureProject /><Story /><Gallery /><Process /><Testimonials /><Contact /></main><Footer /></>
 }
