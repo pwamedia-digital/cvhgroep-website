@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="/cvhgroep-website/admin/admin-theme.css" />
   </head>
   <body>
+    <script>
+      // Migrate bookmarks/open tabs from the former combined homepage editor.
+      // Without this, Sveltia shows a blank "create" form for the removed entry.
+      const legacyCmsRoutes = [
+        '#/collections/website/entries/homepage',
+        '#/collections/website/new',
+      ]
+
+      if (legacyCmsRoutes.some((route) => window.location.hash.startsWith(route))) {
+        window.location.replace(
+          `${window.location.pathname}${window.location.search}#/collections/website/entries/opening`,
+        )
+      }
+    </script>
     <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
     <script src="/cvhgroep-website/admin/editor-controls.js"></script>
     <script src="/cvhgroep-website/admin/preview.js"></script>
