@@ -2,7 +2,6 @@ import Container from '../ui/Container'
 import Button from '../ui/Button'
 import DiagonalStripes from '../ui/DiagonalStripes'
 import { hero, company, marquee } from '../../data/site'
-import heroImg from '../../assets/images/projects/craftsmanship-sunset.jpg'
 
 export default function Hero() {
   return (
@@ -10,7 +9,7 @@ export default function Hero() {
       {/* Achtergrondbeeld */}
       <div className="absolute inset-0">
         <img
-          src={heroImg}
+          src={hero.image}
           alt="Vakmanschap bij CVH Groep — afwerking tijdens het gouden uur"
           className="h-full w-full object-cover object-center"
           fetchpriority="high"

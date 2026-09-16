@@ -33,6 +33,7 @@ collections:
             collapsed: false
             fields:
               - { label: Kleine bovenregel, name: eyebrow, widget: string, hint: Verschijnt boven de grote titel. }
+              - { label: Achtergrondfoto, name: image, widget: image, required: false }
               - { label: Grote titel, name: titleLines, widget: list, field: { label: Titelregel, name: line, widget: string }, hint: Iedere regel verschijnt afzonderlijk onder elkaar. }
               - { label: Introductietekst, name: intro, widget: text }
               - label: Eerste knop
@@ -143,7 +144,6 @@ collections:
             summary: '{{fields.caption}}'
             fields:
               - { label: Foto, name: image, widget: image, required: false }
-              - { label: Bestaande reservefoto, name: fallback, widget: hidden }
               - { label: Bijschrift, name: caption, widget: string }
               - { label: Formaat op de website, name: span, widget: select, options: [{ label: Normaal, value: normal }, { label: Breed, value: wide }, { label: Hoog, value: tall }] }
 

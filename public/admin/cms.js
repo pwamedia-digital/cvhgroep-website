@@ -2,7 +2,7 @@ const REPO = 'pwaseys/cvhgroep-website'
 const BRANCH = 'main'
 const API = `https://api.github.com/repos/${REPO}/contents/`
 const TOKEN_KEY = 'cvh-cms-token'
-const DRAFT_KEY = 'cvh-cms-draft-v3'
+const DRAFT_KEY = 'cvh-cms-draft-v4'
 
 const text = (label, name) => ({ type: 'text', label, name })
 const area = (label, name) => ({ type: 'area', label, name })
@@ -16,7 +16,7 @@ const blocks = [
   {
     key: 'opening', number: '01', title: 'Opening', description: 'Eerste indruk, hoofdtitel, knoppen en specialisaties.', file: 'src/content/opening.json',
     fields: [
-      group('Groot openingsblok', 'hero', [text('Kleine bovenregel', 'eyebrow'), strings('Grote titel', 'titleLines', 'Titelregel'), area('Introductietekst', 'intro'), group('Eerste knop', 'primaryCta', [text('Tekst op de knop', 'label')]), group('Tweede knop', 'secondaryCta', [text('Tekst op de knop', 'label')])]),
+      group('Groot openingsblok', 'hero', [text('Kleine bovenregel', 'eyebrow'), image('Achtergrondfoto', 'image', 16 / 10), strings('Grote titel', 'titleLines', 'Titelregel'), area('Introductietekst', 'intro'), group('Eerste knop', 'primaryCta', [text('Tekst op de knop', 'label')]), group('Tweede knop', 'secondaryCta', [text('Tekst op de knop', 'label')])]),
       strings('Doorlopende regel', 'marquee', 'Specialisatie'),
     ],
   },
@@ -331,7 +331,7 @@ function renderPreview(key, data) {
   const paragraphs = (items = []) => items.map((item) => `<p class="pv-text">${esc(item)}</p>`).join('')
   const cards = (items = [], title = 'title', body = 'text') => `<div class="pv-grid">${items.map((item) => `<div class="pv-card"><b>${esc(item[title] || '')}</b><span class="pv-text">${esc(item[body] || '')}</span></div>`).join('')}</div>`
   const photo = (value) => value ? `<img class="pv-photo" src="${esc(imageSource(value))}" alt="" />` : ''
-  if (key === 'opening') return `<section class="pv-section pv-hero"><span class="pv-kicker">${esc(data.hero.eyebrow)}</span><h1 class="pv-title">${(data.hero.titleLines || []).map(esc).join('<br>')}</h1><p class="pv-text">${esc(data.hero.intro)}</p><div class="pv-buttons"><span>${esc(data.hero.primaryCta?.label)}</span><span>${esc(data.hero.secondaryCta?.label)}</span></div></section>`
+  if (key === 'opening') return `<section class="pv-section pv-hero"><span class="pv-kicker">${esc(data.hero.eyebrow)}</span><h1 class="pv-title">${(data.hero.titleLines || []).map(esc).join('<br>')}</h1>${photo(data.hero.image)}<p class="pv-text">${esc(data.hero.intro)}</p><div class="pv-buttons"><span>${esc(data.hero.primaryCta?.label)}</span><span>${esc(data.hero.secondaryCta?.label)}</span></div></section>`
   if (key === 'intro') return `<section class="pv-section"><span class="pv-kicker">${esc(data.eyebrow)}</span><h2 class="pv-title">${esc(data.title)}</h2>${paragraphs(data.paragraphs)}${cards(data.pillars)}</section>`
   if (key === 'services') {
     if (state.servicesPreview === 'overview') return `<section class="pv-section pv-dark"><span class="pv-kicker">Specialisaties</span><h2 class="pv-title">Vakwerk voor elke ruimte.</h2><div class="pv-grid">${(data.services || []).map((item) => `<div class="pv-card">${photo(item.image)}<span class="pv-kicker">${esc(item.subtitle)}</span><b>${esc(item.title)}</b><p class="pv-text">${esc(item.description)}</p></div>`).join('')}</div></section>`
