@@ -63,7 +63,8 @@ const blocks = [
 const state = {
   token: sessionStorage.getItem(TOKEN_KEY) || '',
   live: {}, staged: {}, draft: {}, shas: {}, assets: {}, active: 'opening',
-  past: [], future: [], viewport: 'desktop', publishing: false, notice: '', error: '',
+  past: [], future: [], viewport: 'desktop', servicesPreview: 'detail', serviceIndex: 0,
+  publishing: false, notice: '', error: '',
 }
 
 const app = document.querySelector('#app')
@@ -150,7 +151,7 @@ function render() {
     <header class="topbar"><div class="identity"><div class="brand-mark">CVH</div><div><strong>CVH Groep</strong><span>Websitebeheer door PWAMEDIA</span></div></div><div class="top-actions"><button class="icon-btn" data-action="undo" aria-label="Ongedaan maken" ${state.past.length ? '' : 'disabled'}>${icon('undo')}</button><button class="icon-btn" data-action="redo" aria-label="Opnieuw uitvoeren" ${state.future.length ? '' : 'disabled'}>${icon('redo')}</button><button class="publish" data-action="publish" ${allSaved() && hasChanges() && !state.publishing ? '' : 'disabled'}>${state.publishing ? 'PUBLICEREN…' : 'PUBLICEREN'}</button><button class="icon-btn" data-action="logout" aria-label="Afmelden">${icon('logout')}</button></div></header>
     <aside class="sidebar"><p class="sidebar-label">WEBSITEBLOKKEN</p><nav class="nav-list">${blocks.map((item) => `<button class="nav-item ${item.key === state.active ? 'active' : ''}" data-block="${item.key}"><span class="nav-number">${item.number}</span><span><strong>${esc(item.title)}</strong><small>${blockDirty(item.key) ? 'Niet opgeslagen' : 'Opgeslagen'}</small></span><i class="status-dot ${blockDirty(item.key) ? 'dirty' : 'saved'}"></i></button>`).join('')}</nav><div class="sidebar-footer"><a href="../" target="_blank" rel="noreferrer">Website openen ↗</a></div></aside>
     <section class="editor"><div class="editor-head"><p>BLOK ${block.number}</p><h1>${esc(block.title)}</h1><span>${esc(block.description)}</span></div><article class="form-card"><div class="form-body">${renderFields(block.fields, state.draft[block.key], [], block)}</div><div class="save-row"><span>${blockDirty(block.key) ? 'Bewaar dit blok om het klaar te zetten voor publicatie.' : 'Dit blok is opgeslagen.'}</span><button class="save-btn" data-action="save" ${blockDirty(block.key) ? '' : 'disabled'}>BLOK OPSLAAN</button></div></article></section>
-    <aside class="preview"><div class="preview-bar"><strong>Live voorbeeld · ${esc(block.title)}</strong><div class="device-switch"><button data-device="desktop" class="${state.viewport === 'desktop' ? 'active' : ''}" aria-label="Desktop">${icon('monitor')}</button><button data-device="mobile" class="${state.viewport === 'mobile' ? 'active' : ''}" aria-label="Mobiel">${icon('phone')}</button></div></div><div class="preview-stage"><div class="site-preview ${state.viewport}" id="site-preview">${renderPreview(block.key, state.draft[block.key])}</div></div></aside>
+    <aside class="preview"><div class="preview-bar"><strong>Live voorbeeld · ${esc(block.title)}</strong><div class="preview-tools">${block.key === 'services' ? `<div class="view-switch"><button data-service-view="overview" class="${state.servicesPreview === 'overview' ? 'active' : ''}">Overzicht</button><button data-service-view="detail" class="${state.servicesPreview === 'detail' ? 'active' : ''}">Detailpagina</button></div>` : ''}<div class="device-switch"><button data-device="desktop" class="${state.viewport === 'desktop' ? 'active' : ''}" aria-label="Desktop">${icon('monitor')}</button><button data-device="mobile" class="${state.viewport === 'mobile' ? 'active' : ''}" aria-label="Mobiel">${icon('phone')}</button></div></div></div><div class="preview-stage"><div class="site-preview ${state.viewport}" id="site-preview">${renderPreview(block.key, state.draft[block.key])}</div></div></aside>
   </main>${state.notice ? `<div class="toast">${esc(state.notice)}</div>` : ''}${state.error ? `<div class="toast error">${esc(state.error)}</div>` : ''}`
   bindEvents()
 }
@@ -177,7 +178,9 @@ function renderStringList(field, values, path) {
 }
 
 function renderObjectList(field, values, path, block) {
-  return `<section class="list"><div class="list-head"><strong>${esc(field.label)}</strong><button class="add-btn" data-list-add="${pathKey(path)}" data-list-type="object">${icon('add')} Toevoegen</button></div>${values.map((value, index) => `<article class="object-item ${index ? 'collapsed' : ''}"><button class="object-summary" data-collapse><span><b>${String(index + 1).padStart(2, '0')}</b>${esc(value[field.summary] || `${field.label} ${index + 1}`)}</span><span>⌄</span></button><div class="object-fields">${renderFields(field.fields, state.draft[block.key], [...path, index], block)}<button class="remove-btn" data-list-remove="${pathKey(path)}" data-index="${index}" aria-label="Verwijderen">${icon('remove')}</button></div></article>`).join('')}</section>`
+  const serviceList = block.key === 'services' && pathKey(path) === 'services'
+  const selectedIndex = Math.min(state.serviceIndex, Math.max(values.length - 1, 0))
+  return `<section class="list"><div class="list-head"><strong>${esc(field.label)}</strong><button class="add-btn" data-list-add="${pathKey(path)}" data-list-type="object">${icon('add')} Toevoegen</button></div>${values.map((value, index) => `<article class="object-item ${serviceList ? (index === selectedIndex ? 'previewing' : 'collapsed') : (index ? 'collapsed' : '')}"><button class="object-summary" data-collapse ${serviceList ? `data-service-index="${index}"` : ''}><span><b>${String(index + 1).padStart(2, '0')}</b>${esc(value[field.summary] || `${field.label} ${index + 1}`)}</span><span>⌄</span></button><div class="object-fields">${renderFields(field.fields, state.draft[block.key], [...path, index], block)}<button class="remove-btn" data-list-remove="${pathKey(path)}" data-index="${index}" aria-label="Verwijderen">${icon('remove')}</button></div></article>`).join('')}</section>`
 }
 
 function renderImage(field, value, path) {
@@ -201,7 +204,15 @@ function bindEvents() {
       control._before = null
     })
   })
-  document.querySelectorAll('[data-collapse]').forEach((button) => button.addEventListener('click', () => button.closest('.object-item').classList.toggle('collapsed')))
+  document.querySelectorAll('[data-collapse]').forEach((button) => button.addEventListener('click', () => {
+    if (button.dataset.serviceIndex !== undefined) {
+      state.serviceIndex = Number(button.dataset.serviceIndex)
+      state.servicesPreview = 'detail'
+      render()
+      return
+    }
+    button.closest('.object-item').classList.toggle('collapsed')
+  }))
   document.querySelectorAll('[data-list-add]').forEach((button) => button.addEventListener('click', () => mutate(() => {
     const path = button.dataset.listAdd.split('.')
     let list = getAt(state.draft[state.active], path)
@@ -210,6 +221,10 @@ function bindEvents() {
       list = getAt(state.draft[state.active], path)
     }
     list.push(button.dataset.listType === 'string' ? '' : {})
+    if (state.active === 'services' && pathKey(path) === 'services') {
+      state.serviceIndex = list.length - 1
+      state.servicesPreview = 'detail'
+    }
   })))
   document.querySelectorAll('[data-list-remove]').forEach((button) => button.addEventListener('click', () => mutate(() => getAt(state.draft[state.active], button.dataset.listRemove.split('.')).splice(Number(button.dataset.index), 1))))
   document.querySelectorAll('[data-image]').forEach((button) => button.addEventListener('click', () => chooseImage(button.dataset.image.split('.'), Number(button.dataset.aspect))))
@@ -220,6 +235,7 @@ function bindEvents() {
   document.querySelector('[data-action="redo"]')?.addEventListener('click', redo)
   document.querySelector('[data-action="logout"]')?.addEventListener('click', () => { sessionStorage.removeItem(TOKEN_KEY); state.token = ''; showLogin() })
   document.querySelectorAll('[data-device]').forEach((button) => button.addEventListener('click', () => { state.viewport = button.dataset.device; render() }))
+  document.querySelectorAll('[data-service-view]').forEach((button) => button.addEventListener('click', () => { state.servicesPreview = button.dataset.serviceView; render() }))
 }
 
 function pushPast(snapshot) { state.past.push(snapshot); state.past = state.past.slice(-50); state.future = [] }
@@ -317,7 +333,12 @@ function renderPreview(key, data) {
   const photo = (value) => value ? `<img class="pv-photo" src="${esc(imageSource(value))}" alt="" />` : ''
   if (key === 'opening') return `<section class="pv-section pv-hero"><span class="pv-kicker">${esc(data.hero.eyebrow)}</span><h1 class="pv-title">${(data.hero.titleLines || []).map(esc).join('<br>')}</h1><p class="pv-text">${esc(data.hero.intro)}</p><div class="pv-buttons"><span>${esc(data.hero.primaryCta?.label)}</span><span>${esc(data.hero.secondaryCta?.label)}</span></div></section>`
   if (key === 'intro') return `<section class="pv-section"><span class="pv-kicker">${esc(data.eyebrow)}</span><h2 class="pv-title">${esc(data.title)}</h2>${paragraphs(data.paragraphs)}${cards(data.pillars)}</section>`
-  if (key === 'services') return `<section class="pv-section pv-dark"><span class="pv-kicker">Specialisaties</span><h2 class="pv-title">Vakwerk voor elke ruimte.</h2><div class="pv-grid">${(data.services || []).map((item) => `<div class="pv-card">${photo(item.image)}<span class="pv-kicker">${esc(item.subtitle)}</span><b>${esc(item.title)}</b><p class="pv-text">${esc(item.description)}</p></div>`).join('')}</div></section>`
+  if (key === 'services') {
+    if (state.servicesPreview === 'overview') return `<section class="pv-section pv-dark"><span class="pv-kicker">Specialisaties</span><h2 class="pv-title">Vakwerk voor elke ruimte.</h2><div class="pv-grid">${(data.services || []).map((item) => `<div class="pv-card">${photo(item.image)}<span class="pv-kicker">${esc(item.subtitle)}</span><b>${esc(item.title)}</b><p class="pv-text">${esc(item.description)}</p></div>`).join('')}</div></section>`
+    const services = data.services || []
+    const service = services[Math.min(state.serviceIndex, Math.max(services.length - 1, 0))] || {}
+    return `<section class="pv-detail-hero">${photo(service.image)}<div class="pv-detail-intro"><span class="pv-kicker">${esc(service.number)} · ${esc(service.subtitle)}</span><h2 class="pv-title">${esc(service.title)}</h2><p class="pv-lead">${esc(service.lead || service.description)}</p><div class="pv-tags">${(service.tags || []).map((tag) => `<span>${esc(tag)}</span>`).join('')}</div></div></section><section class="pv-section"><span class="pv-kicker">Aanpak & uitvoering</span>${paragraphs(service.intro)}<div class="pv-techniques">${(service.techniques || []).map((item, index) => `<article><b>${String(index + 1).padStart(2, '0')}</b><div><h3>${esc(item.title)}</h3><p class="pv-text">${esc(item.text)}</p></div></article>`).join('')}</div>${(service.suitable || []).length ? `<h3 class="pv-subtitle">Geschikt voor</h3><div class="pv-tags pv-tags-light">${service.suitable.map((item) => `<span>${esc(item)}</span>`).join('')}</div>` : ''}${service.note ? `<aside class="pv-note"><span class="pv-kicker">Goed om te weten</span><p>${esc(service.note)}</p></aside>` : ''}</section>`
+  }
   if (key === 'project') return `<section class="pv-section"><span class="pv-kicker">${esc(data.eyebrow)}</span><h2 class="pv-title">${esc(data.title)}</h2>${photo(data.image)}<p class="pv-text">${esc(data.client)} · ${esc(data.location)} · ${esc(data.year)}</p><p class="pv-text">${esc(data.description)}</p></section>`
   if (key === 'story') return `<section class="pv-section pv-dark"><span class="pv-kicker">${esc(data.eyebrow)}</span><h2 class="pv-title">${esc(data.title)}</h2>${photo(data.image)}<p class="pv-text">${esc(data.lead)}</p>${paragraphs(data.paragraphs)}<p><b>${esc(data.signature)}</b><br><span class="pv-text">${esc(data.signatureRole)}</span></p></section>`
   if (key === 'gallery') return `<section class="pv-section"><span class="pv-kicker">Realisaties</span><h2 class="pv-title">Werk dat voor zichzelf spreekt.</h2><div class="pv-grid">${(data.items || []).map((item) => `<div class="pv-card">${photo(item.image)}<b>${esc(item.caption)}</b></div>`).join('')}</div></section>`
