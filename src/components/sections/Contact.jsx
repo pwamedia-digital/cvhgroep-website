@@ -106,7 +106,12 @@ export default function Contact() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <form
+                  action={FORMSPREE_ENDPOINT}
+                  method="POST"
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-5"
+                >
                   <input type="hidden" name="_subject" value={`Nieuwe offerteaanvraag — ${form.service || 'CVH Groep'}`} />
                   <div className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
                     <label htmlFor="website">Laat dit veld leeg</label>
