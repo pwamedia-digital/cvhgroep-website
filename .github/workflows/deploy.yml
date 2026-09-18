@@ -2,6 +2,7 @@ name: Deploy naar GitHub Pages
 
 # Bouwt de Vite-site en publiceert hem naar GitHub Pages
 # bij elke push naar main (en handmatig via de Actions-tab).
+# Opnieuw geactiveerd na de verhuis naar de PWAMEDIA-organisatie.
 on:
   push:
     branches: [main]
