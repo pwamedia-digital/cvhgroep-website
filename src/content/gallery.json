@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "image": "/cvhgroep-website/uploads/current-entrance-black-door.jpg",
+      "caption": "Inkomhal & interieur",
+      "span": "tall"
+    },
+    {
+      "image": "/cvhgroep-website/uploads/current-kitchen-modern.jpg",
+      "caption": "Keuken & leefruimte",
+      "span": "wide"
+    },
+    {
+      "image": "/cvhgroep-website/uploads/current-spanplafond-led.jpg",
+      "caption": "Spanplafond met LED",
+      "span": "normal"
+    },
+    {
+      "image": "/cvhgroep-website/uploads/current-renovation-in-progress.jpg",
+      "caption": "Renovatie in uitvoering",
+      "span": "normal"
+    },
+    {
+      "image": "/cvhgroep-website/uploads/current-flat-roof-oostende.jpg",
+      "caption": "Plat dak — Oostende",
+      "span": "wide"
+    },
+    {
+      "image": "/cvhgroep-website/uploads/current-craftsmanship-sunset.jpg",
+      "caption": "Vakmanschap",
+      "span": "tall"
+    }
+  ]
+}

@@ -20,6 +20,6 @@ npm run typecheck
 npm run build
 ```
 
-De website gebruikt `content/site.json` als initiële fallback. Gepubliceerde en conceptcontent worden daarna via de database beheerd. De actieve CMS-code staat in `app/admin`, `app/api/cms`, `server` en `cms-starter`.
+De website gebruikt `content/site.json` als initiële CMS-fallback. De Next.js-laag staat in `app/`; de bestaande visuele React-componenten en merkassets in `src/` vormen nog steeds de actieve presentatielaag. CMS-routes en serverlogica staan in `app/api/cms`, `server` en `cms-starter`.
 
-De vroegere Vite-app, het statische browser-CMS en de GitHub Pages-workflow zijn na de CMS-migratie verwijderd.
+De vroegere losse Vite-opstart, het statische browser-CMS en de GitHub Pages-workflow zijn na de CMS-migratie verwijderd.
