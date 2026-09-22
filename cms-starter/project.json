@@ -1,12 +1,27 @@
 {
   "version": 1,
   "enabled": true,
+  "projectId": "747efcd4-d64f-442f-812b-9c0c3d771653",
   "projectName": "CVH GROEP - website",
-  "siteName": "CVH Groep",
+  "siteName": "CVH GROEP",
   "cmsLabel": "Websitebeheer door PWAMEDIA",
   "previewPath": "/",
+  "modules": [
+    "hero",
+    "intro",
+    "about",
+    "services",
+    "gallery",
+    "company",
+    "hours",
+    "contact"
+  ],
   "security": {
+    "provider": "better-auth",
+    "database": "postgresql-neon",
     "twoFactorRequired": true,
-    "pwamediaSso": true
+    "recoveryCodes": true,
+    "publicRegistration": false,
+    "serverSideSessions": true
   }
 }
