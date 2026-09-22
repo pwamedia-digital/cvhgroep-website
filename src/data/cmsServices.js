@@ -1,3 +1,7 @@
 import content from '../content/services.json'
 
-export const cmsServices = content.services
+export let cmsServices = content.services
+
+export function applyCmsServices(services) {
+  if (Array.isArray(services)) cmsServices = services
+}

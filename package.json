@@ -1,22 +1,32 @@
 {
   "name": "cvhgroep-website",
+  "version": "0.2.0",
   "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Premium website voor CVH Groep — Renovaties, Spanplafonds, Gietvloeren & Steentapijten, Platte daken (Oostende)",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "better-auth": "1.7.5",
+    "lucide-react": "^0.544.0",
+    "next": "16.3.5",
+    "pg": "^8.16.3",
+    "react": "^19.2.0",
+    "react-cropper": "^2.3.3",
+    "react-dom": "^19.2.0",
+    "react-qr-code": "^2.0.18",
+    "@vercel/blob": "^2.6.1",
+    "cropperjs": "^1.6.2"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.11",
-    "@vitejs/plugin-react": "^4.6.0",
-    "tailwindcss": "^4.1.11",
-    "vite": "^6.3.5"
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.0"
   }
 }

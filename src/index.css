@@ -39,8 +39,8 @@
   --color-ink-soft: #3a4658;
 
   /* --- Typografie --------------------------------------------- */
-  --font-display: "Alegreya", ui-serif, Georgia, serif;
-  --font-sans: "Alegreya Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-alegreya), "Alegreya", ui-serif, Georgia, serif;
+  --font-sans: var(--font-alegreya-sans), "Alegreya Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* --- Fluide display-formaten -------------------------------- */
   --text-mega: clamp(2.75rem, 8vw, 8.5rem);

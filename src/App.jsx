@@ -14,7 +14,7 @@ import Contact from './components/sections/Contact'
 import ServicePage from './components/pages/ServicePage'
 
 export default function App() {
-  const [hash, setHash] = useState(window.location.hash)
+  const [hash, setHash] = useState(() => typeof window === 'undefined' ? '' : window.location.hash)
   useEffect(() => { const update = () => setHash(window.location.hash); window.addEventListener('hashchange', update); return () => window.removeEventListener('hashchange', update) }, [])
   const serviceMatch = hash.match(/^#\/diensten\/([^/?]+)/)
   useEffect(() => {

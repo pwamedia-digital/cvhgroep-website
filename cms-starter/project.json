@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "enabled": true,
+  "projectName": "CVH GROEP - website",
+  "siteName": "CVH Groep",
+  "cmsLabel": "Websitebeheer door PWAMEDIA",
+  "previewPath": "/",
+  "security": {
+    "twoFactorRequired": true,
+    "pwamediaSso": true
+  }
+}
