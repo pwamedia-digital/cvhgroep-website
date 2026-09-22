@@ -102,7 +102,7 @@ CREATE INDEX IF NOT EXISTS cms_audit_log_created_at_idx ON cms_audit_log (create
 INSERT INTO cms_content (id, draft, published)
 VALUES (
   'site',
-  $
+  $cms$
 {
   "company": {
     "name": "CVH Groep",
@@ -498,8 +498,8 @@ VALUES (
     }
   }
 }
-$::jsonb,
-  $
+$cms$::jsonb,
+  $cms$
 {
   "company": {
     "name": "CVH Groep",
@@ -895,7 +895,7 @@ $::jsonb,
     }
   }
 }
-$::jsonb
+$cms$::jsonb
 )
 ON CONFLICT (id) DO NOTHING;
 
